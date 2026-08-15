@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>7AM Perfumes — Fragancias Inspiradas | Caldas, Antioquia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --negro:#0A0A0A;--carbon:#141414;--carbon2:#1C1C1C;
+      --dorado:#C9A84C;--dorado2:#E8C96A;--crema:#F0E6CC;
+      --gris:#888;--blanco:#FAFAFA;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--negro);color:var(--crema);font-family:'Inter',sans-serif;overflow-x:hidden}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5%;transition:background .4s,backdrop-filter .4s}
+    nav.scrolled{background:rgba(10,10,10,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.15)}
+    .nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--dorado);letter-spacing:.05em;text-decoration:none}
+    .nav-logo span{color:var(--crema);font-weight:400;font-style:italic}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{color:var(--crema);text-decoration:none;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;opacity:.75;transition:opacity .2s,color .2s}
+    .nav-links a:hover{opacity:1;color:var(--dorado)}
+    .nav-cta{background:transparent;border:1px solid var(--dorado);color:var(--dorado);font-family:'Inter',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1.4rem;cursor:pointer;text-decoration:none;transition:background .25s,color .25s}
+    .nav-cta:hover{background:var(--dorado);color:var(--negro)}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+    .hamburger span{width:24px;height:1.5px;background:var(--crema);transition:.3s;display:block}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+    .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--negro);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{font-family:'Playfair Display',serif;font-size:2rem;color:var(--crema);text-decoration:none;transition:color .2s}
+    .mobile-menu a:hover{color:var(--dorado)}
+
+    /* HERO */
+    #hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+    #hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(201,168,76,.08) 0%,transparent 70%),radial-gradient(ellipse 30% 40% at 20% 80%,rgba(201,168,76,.05) 0%,transparent 60%)}
+    .gold-thread{position:absolute;right:8%;top:0;width:1px;height:0;background:linear-gradient(to bottom,transparent,var(--dorado) 30%,var(--dorado2) 70%,transparent);animation:threadDrop 2s ease-out .5s forwards}
+    .gold-thread::after{content:'';position:absolute;bottom:0;left:-3px;width:7px;height:7px;border-radius:50%;background:var(--dorado2);box-shadow:0 0 12px var(--dorado)}
+    @keyframes threadDrop{to{height:100%}}
+    .hero-content{position:relative;padding:0 5%;max-width:680px;animation:fadeUp 1.1s ease-out .3s both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    .hero-eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dorado);font-weight:500;margin-bottom:1.6rem;display:flex;align-items:center;gap:1rem}
+    .hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--dorado);flex-shrink:0}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5.2rem);font-weight:700;line-height:1.05;color:var(--blanco);margin-bottom:1.8rem}
+    h1 em{font-style:italic;color:var(--dorado)}
+    .hero-sub{font-size:1rem;line-height:1.75;color:rgba(240,230,204,.65);max-width:480px;margin-bottom:3rem;font-weight:300}
+    .hero-actions{display:flex;gap:1.2rem;flex-wrap:wrap}
+    .btn-primary{background:var(--dorado);color:var(--negro);border:none;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;display:inline-block;transition:background .25s,transform .2s}
+    .btn-primary:hover{background:var(--dorado2);transform:translateY(-2px)}
+    .btn-ghost{background:transparent;color:var(--crema);border:1px solid rgba(240,230,204,.3);font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .25s,color .25s}
+    .btn-ghost:hover{border-color:var(--dorado);color:var(--dorado)}
+    .hero-stats{position:absolute;bottom:4rem;right:14%;display:flex;gap:3rem;animation:fadeUp 1.1s ease-out .8s both}
+    .stat-item{text-align:center}
+    .stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--dorado);font-weight:700;display:block;line-height:1}
+    .stat-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(240,230,204,.45);margin-top:.4rem;display:block}
+    .scroll-ind{position:absolute;bottom:2.5rem;left:5%;display:flex;align-items:center;gap:.8rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,230,204,.4);animation:fadeUp 1s ease-out 1.5s both}
+    .scroll-line{width:40px;height:1px;background:var(--dorado);position:relative;overflow:hidden}
+    .scroll-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--crema);animation:scanLine 2s ease-in-out infinite}
+    @keyframes scanLine{0%{left:-100%}100%{left:200%}}
+
+    /* SECCIONES */
+    section{padding:7rem 5%}
+    .section-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--dorado);font-weight:500;margin-bottom:1rem}
+    h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.15;color:var(--blanco);margin-bottom:1.5rem}
+    h2 em{font-style:italic;color:var(--dorado)}
+    .section-desc{font-size:.95rem;line-height:1.8;color:rgba(240,230,204,.6);max-width:520px;font-weight:300}
+
+    /* POR QUÉ */
+    #porque{background:var(--carbon);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    .porque-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+    .porque-card{background:var(--carbon2);border:1px solid rgba(201,168,76,.1);padding:1.8rem;transition:border-color .3s,transform .3s}
+    .porque-card:hover{border-color:rgba(201,168,76,.4);transform:translateY(-4px)}
+    .porque-icon{font-size:1.6rem;margin-bottom:1rem}
+    .porque-card h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dorado);margin-bottom:.5rem}
+    .porque-card p{font-size:.82rem;line-height:1.65;color:rgba(240,230,204,.55);font-weight:300}
+    .porque-visual{position:relative;height:480px}
+    .v-box{position:absolute;border:1px solid rgba(201,168,76,.2)}
+    .v-box1{inset:0;background:var(--carbon2)}
+    .v-box2{top:-1.5rem;right:-1.5rem;bottom:1.5rem;left:1.5rem;background:linear-gradient(135deg,rgba(201,168,76,.06),transparent);border-color:rgba(201,168,76,.3)}
+    .v-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2.5rem}
+    .v-percent{font-family:'Playfair Display',serif;font-size:5.5rem;font-weight:700;color:var(--dorado);line-height:1;text-shadow:0 0 60px rgba(201,168,76,.3)}
+    .v-percent span{font-size:2.5rem}
+    .v-text{text-align:center;font-size:.85rem;line-height:1.7;color:rgba(240,230,204,.65);max-width:220px}
+    .v-divider{width:40px;height:1px;background:var(--dorado);opacity:.5}
+    .v-loc{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(201,168,76,.6)}
+
+    /* CATÁLOGO */
+    #catalogo{background:var(--negro)}
+    .catalogo-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.5rem}
+    .filtros{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .filtro-btn{background:transparent;border:1px solid rgba(201,168,76,.2);color:rgba(240,230,204,.5);font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.5rem 1.2rem;cursor:pointer;transition:all .25s}
+    .filtro-btn:hover,.filtro-btn.active{border-color:var(--dorado);color:var(--dorado);background:rgba(201,168,76,.06)}
+
+    /* Buscador */
+    .search-wrap{position:relative;margin-bottom:2rem;max-width:400px}
+    .search-wrap input{width:100%;background:var(--carbon);border:1px solid rgba(201,168,76,.15);color:var(--crema);font-family:'Inter',sans-serif;font-size:.85rem;padding:.75rem 1rem .75rem 2.8rem;outline:none;transition:border-color .25s}
+    .search-wrap input::placeholder{color:rgba(240,230,204,.3)}
+    .search-wrap input:focus{border-color:rgba(201,168,76,.5)}
+    .search-wrap svg{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);width:16px;height:16px;fill:none;stroke:rgba(201,168,76,.5);stroke-width:2}
+
+    /* Contador */
+    .cat-count{font-size:.75rem;color:rgba(240,230,204,.35);letter-spacing:.1em;margin-bottom:1.5rem}
+    .cat-count span{color:var(--dorado)}
+
+    /* Grid */
+    .fragancias-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:rgba(201,168,76,.06)}
+    .fragancia-card{background:var(--carbon);overflow:hidden;cursor:pointer;transition:background .3s;position:relative}
+    .fragancia-card:hover{background:var(--carbon2)}
+    .fragancia-card:hover .fcard-img{transform:scale(1.04)}
+    .fragancia-card:hover .fcard-overlay{opacity:1}
+    .fcard-img-wrap{height:200px;overflow:hidden;position:relative;background:var(--carbon2)}
+    .fcard-img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .5s ease;display:block}
+    .fcard-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--carbon2);color:rgba(201,168,76,.2);font-size:3rem}
+    .fcard-overlay{position:absolute;inset:0;background:rgba(10,10,10,.5);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:1rem}
+    .fcard-wa{display:inline-flex;align-items:center;gap:.5rem;background:#25D366;color:#fff;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1rem;text-decoration:none;transition:background .2s}
+    .fcard-wa:hover{background:#1ebe5c}
+    .fcard-wa svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
+    .fcard-badge{position:absolute;top:.8rem;right:.8rem;background:var(--dorado);color:var(--negro);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem}
+    .fcard-body{padding:1.2rem 1.4rem 1.5rem}
+    .fcard-genero{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,168,76,.6);border:1px solid rgba(201,168,76,.15);padding:.18rem .55rem;display:inline-block;margin-bottom:.7rem}
+    .fcard-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--blanco);margin-bottom:.3rem;font-weight:600;line-height:1.2}
+    .fcard-code{font-size:.68rem;color:rgba(240,230,204,.25);letter-spacing:.08em;margin-bottom:.9rem}
+    .fcard-prices{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+    .fcard-price{text-align:center}
+    .fcard-price-ml{font-size:.6rem;color:rgba(240,230,204,.35);letter-spacing:.08em;display:block;margin-bottom:.15rem}
+    .fcard-price-val{font-size:.82rem;color:var(--dorado);font-weight:600}
+    .fcard-price-sep{width:1px;height:22px;background:rgba(201,168,76,.12);flex-shrink:0}
+
+    /* PRESENTACIONES */
+    #presentaciones{background:var(--carbon);text-align:center}
+    #presentaciones h2{text-align:center}
+    .pres-sub{text-align:center;margin:0 auto 4rem}
+    .presentaciones-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:900px;margin:0 auto}
+    .pres-card{background:var(--carbon2);border:1px solid rgba(201,168,76,.1);padding:2.5rem 1.5rem 2rem;text-align:center;transition:border-color .3s,transform .3s;position:relative}
+    .pres-card:hover{border-color:rgba(201,168,76,.5);transform:translateY(-6px)}
+    .pres-card.popular::before{content:'Popular';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--dorado);color:var(--negro);font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .8rem}
+    .frasco-svg{margin:0 auto 1.5rem;display:block}
+    .pres-ml{font-family:'Playfair Display',serif;font-size:2rem;color:var(--dorado);font-weight:700;line-height:1}
+    .pres-ml span{font-size:1rem;color:rgba(201,168,76,.6)}
+    .pres-name{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,230,204,.4);margin:.4rem 0 1rem}
+    .pres-desc{font-size:.78rem;line-height:1.6;color:rgba(240,230,204,.5);font-weight:300}
+
+    /* PROCESO */
+    #proceso{background:var(--negro);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    .proceso-steps{margin-top:3rem}
+    .proceso-step{display:flex;gap:1.5rem;padding:1.8rem 0;border-bottom:1px solid rgba(201,168,76,.08)}
+    .proceso-step:first-child{padding-top:0}
+    .step-num{font-family:'Playfair Display',serif;font-size:1.2rem;color:rgba(201,168,76,.2);font-weight:700;min-width:32px;line-height:1;padding-top:.1rem}
+    .step-content h4{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--blanco);margin-bottom:.4rem}
+    .step-content p{font-size:.8rem;line-height:1.6;color:rgba(240,230,204,.5);font-weight:300}
+    .proceso-quote{background:var(--carbon);border-left:2px solid var(--dorado);padding:2.5rem}
+    .proceso-quote blockquote{font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;color:var(--crema);line-height:1.6;margin-bottom:1.5rem}
+    .proceso-quote cite{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dorado);font-style:normal}
+    .proceso-dot{display:flex;align-items:center;gap:1rem;margin-top:1.2rem}
+    .dot{width:10px;height:10px;background:var(--dorado);border-radius:50%;flex-shrink:0}
+    .proceso-dot p{font-size:.82rem;color:rgba(240,230,204,.5)}
+
+    /* TESTIMONIOS */
+    #testimonios{background:var(--carbon);text-align:center}
+    #testimonios h2{text-align:center;margin-bottom:.5rem}
+    .test-sub{text-align:center;margin:0 auto 4rem}
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto}
+    .test-card{background:var(--negro);border:1px solid rgba(201,168,76,.08);padding:2rem;text-align:left}
+    .test-stars{color:var(--dorado);font-size:.9rem;letter-spacing:.1em;margin-bottom:1rem}
+    .test-text{font-family:'Playfair Display',serif;font-size:.95rem;font-style:italic;color:rgba(240,230,204,.75);line-height:1.7;margin-bottom:1.5rem}
+    .test-author{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.6)}
+
+    /* CTA */
+    #contacto{background:var(--negro);text-align:center;padding:9rem 5%;position:relative;overflow:hidden}
+    #contacto::before{content:'7AM';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Playfair Display',serif;font-size:clamp(8rem,20vw,18rem);font-weight:700;color:rgba(201,168,76,.04);pointer-events:none;white-space:nowrap;letter-spacing:-.02em}
+    #contacto h2{position:relative;text-align:center;max-width:600px;margin:0 auto 1.5rem}
+    .cta-desc{position:relative;font-size:.95rem;line-height:1.8;color:rgba(240,230,204,.55);max-width:460px;margin:0 auto 3.5rem;font-weight:300}
+    .cta-actions{position:relative;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .btn-wa{background:#25D366;color:#fff;border:none;font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.7rem;transition:background .25s,transform .2s}
+    .btn-wa:hover{background:#1ebe5c;transform:translateY(-2px)}
+    .btn-wa svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
+
+    /* FOOTER */
+    footer{background:#050505;padding:4rem 5% 2.5rem;border-top:1px solid rgba(201,168,76,.1)}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+    .footer-brand p{font-size:.82rem;line-height:1.7;color:rgba(240,230,204,.4);font-weight:300;max-width:260px;margin-top:1rem}
+    .footer-col h4{font-family:'Playfair Display',serif;font-size:.85rem;color:var(--dorado);margin-bottom:1.2rem}
+    .footer-col ul{list-style:none}
+    .footer-col ul li{margin-bottom:.6rem}
+    .footer-col ul li a{font-size:.8rem;color:rgba(240,230,204,.4);text-decoration:none;transition:color .2s}
+    .footer-col ul li a:hover{color:var(--dorado)}
+    .footer-bottom{border-top:1px solid rgba(201,168,76,.07);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .footer-bottom p{font-size:.75rem;color:rgba(240,230,204,.25)}
+    .footer-bottom span{color:var(--dorado)}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(25px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      #porque{grid-template-columns:1fr;gap:3rem}
+      .porque-visual{height:300px}
+      #proceso{grid-template-columns:1fr;gap:3rem}
+      .presentaciones-grid{grid-template-columns:repeat(2,1fr)}
+      .test-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:640px){
+      .nav-links,.nav-cta{display:none}
+      .hamburger{display:flex}
+      .porque-grid{grid-template-columns:1fr}
+      .hero-stats{position:static;margin-top:3rem}
+      .footer-grid{grid-template-columns:1fr;gap:2.5rem}
+    }
+    @media(max-width:420px){
+      .presentaciones-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">7AM <span>Perfumes</span></a>
+  <ul class="nav-links">
+    <li><a href="#porque">Nosotros</a></li>
+    <li><a href="#catalogo">Catálogo</a></li>
+    <li><a href="#presentaciones">Presentaciones</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/573136245018" target="_blank" class="nav-cta">Pedir ahora</a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#porque" class="mobile-link">Nosotros</a>
+  <a href="#catalogo" class="mobile-link">Catálogo</a>
+  <a href="#presentaciones" class="mobile-link">Presentaciones</a>
+  <a href="#contacto" class="mobile-link">Contacto</a>
+  <a href="https://wa.me/573136245018" target="_blank" style="color:var(--dorado);font-size:1rem;letter-spacing:.2em;text-transform:uppercase;font-family:'Inter',sans-serif;border:1px solid var(--dorado);padding:.8rem 2rem;margin-top:1rem;text-decoration:none;">Pedir ahora</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="gold-thread"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Caldas, Antioquia · Colombia</p>
+    <h1>El lujo que<br/><em>mereces,</em><br/>al alcance de todos.</h1>
+    <p class="hero-sub">Fragancias inspiradas en los grandes perfumes del mundo, con hasta un 95% de similitud en su esencia. Calidad real, sin el precio de la etiqueta.</p>
+    <div class="hero-actions">
+      <a href="#catalogo" class="btn-primary">Ver catálogo</a>
+      <a href="https://wa.me/573136245018?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20los%20perfumes%207AM" target="_blank" class="btn-ghost">Pedir por WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">95<span style="font-size:1.2rem">%</span></span>
+      <span class="stat-label">Similitud</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">99</span>
+      <span class="stat-label">Referencias</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Géneros</span>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    Descubre
+  </div>
+</section>
+
+<!-- POR QUÉ -->
+<section id="porque">
+  <div>
+    <p class="section-label reveal">¿Por qué 7AM?</p>
+    <h2 class="reveal">Fragancia de alto<br/>nivel, <em>sin pretextos</em></h2>
+    <p class="section-desc reveal">Nos obsesiona que huelas increíble todos los días. Por eso trabajamos con las mejores materias primas para acercarte lo más posible al original.</p>
+    <div class="porque-grid">
+      <div class="porque-card reveal">
+        <div class="porque-icon">🌿</div>
+        <h3>Materias primas premium</h3>
+        <p>Aceites e ingredientes de alta concentración que garantizan proyección y duración sobresaliente.</p>
+      </div>
+      <div class="porque-card reveal">
+        <div class="porque-icon">✦</div>
+        <h3>95% de similitud</h3>
+        <p>Cada fragancia pasa por un proceso de comparación riguroso para replicar la esencia del original.</p>
+      </div>
+      <div class="porque-card reveal">
+        <div class="porque-icon">📦</div>
+        <h3>Servicio virtual</h3>
+        <p>Pedidos por WhatsApp, entregas en Caldas y zonas cercanas. Rápido, fácil y confiable.</p>
+      </div>
+      <div class="porque-card reveal">
+        <div class="porque-icon">♻️</div>
+        <h3>Recarga / Refill</h3>
+        <p>¿Ya tienes tu frasco? Recárgalo y ahorra. Un servicio pensado para quienes cuidan su bolsillo.</p>
+      </div>
+    </div>
+  </div>
+  <div class="porque-visual reveal">
+    <div class="v-box v-box1"></div>
+    <div class="v-box v-box2"></div>
+    <div class="v-inner">
+      <div class="v-percent">95<span>%</span></div>
+      <div class="v-divider"></div>
+      <p class="v-text">Similitud garantizada con la fragancia original que inspira cada creación</p>
+      <p class="v-loc">📍 Caldas · Antioquia</p>
+    </div>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section id="catalogo">
+  <div class="catalogo-header reveal">
+    <div>
+      <p class="section-label">Catálogo</p>
+      <h2>Nuestras <em>fragancias</em></h2>
+    </div>
+    <p class="section-desc" style="max-width:320px;">99 referencias para hombre, mujer y unisex. Encuentra la tuya.</p>
+  </div>
+  <div class="search-wrap reveal">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Buscar fragancia o marca..."/>
+  </div>
+  <div class="filtros">
+    <button class="filtro-btn active" data-filtro="Todos">Todos</button>
+    <button class="filtro-btn" data-filtro="Femenino">Femenino</button>
+    <button class="filtro-btn" data-filtro="Masculino">Masculino</button>
+    <button class="filtro-btn" data-filtro="Unisex">Unisex</button>
+  </div>
+  <p class="cat-count" id="catCount">Mostrando <span id="countNum">99</span> fragancias</p>
+  <div class="fragancias-grid" id="fragGrid"></div>
+</section>
+
+<!-- PRESENTACIONES -->
+<section id="presentaciones">
+  <p class="section-label reveal">Presentaciones</p>
+  <h2 class="reveal">Elige tu <em>tamaño</em></h2>
+  <p class="section-desc pres-sub reveal">Desde una muestra hasta un frasco completo. Todas con la misma concentración y calidad.</p>
+  <div class="presentaciones-grid">
+    <div class="pres-card reveal">
+      <svg class="frasco-svg" width="55" height="85" viewBox="0 0 55 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="2" width="15" height="7" rx="2" fill="#C9A84C" opacity=".6"/>
+        <rect x="17" y="8" width="21" height="4" rx="1" fill="#C9A84C" opacity=".4"/>
+        <rect x="12" y="12" width="31" height="68" rx="4" fill="#1C1C1C" stroke="#C9A84C" stroke-width=".8" stroke-opacity=".5"/>
+        <rect x="16" y="20" width="4" height="50" rx="2" fill="#C9A84C" opacity=".08"/>
+      </svg>
+      <div class="pres-ml">10<span>ml</span></div>
+      <div class="pres-name">Muestra / Viaje</div>
+      <p class="pres-desc">Ideal para probar o llevar en el bolso. Perfecta para descubrir una fragancia nueva.</p>
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--dorado);font-weight:600">$7.000</p>
+    </div>
+    <div class="pres-card reveal">
+      <svg class="frasco-svg" width="60" height="88" viewBox="0 0 60 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="21" y="2" width="18" height="8" rx="2" fill="#C9A84C" opacity=".65"/>
+        <rect x="16" y="9" width="28" height="5" rx="1" fill="#C9A84C" opacity=".45"/>
+        <rect x="9" y="14" width="42" height="70" rx="5" fill="#1C1C1C" stroke="#C9A84C" stroke-width=".8" stroke-opacity=".55"/>
+        <rect x="13" y="23" width="5" height="52" rx="2" fill="#C9A84C" opacity=".1"/>
+      </svg>
+      <div class="pres-ml">30<span>ml</span></div>
+      <div class="pres-name">Diaria</div>
+      <p class="pres-desc">Versátil y práctica. Cabe en cualquier bolso y dura varias semanas con uso regular.</p>
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--dorado);font-weight:600">$20.000</p>
+    </div>
+    <div class="pres-card popular reveal">
+      <svg class="frasco-svg" width="65" height="95" viewBox="0 0 65 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="23" y="2" width="19" height="10" rx="2" fill="#C9A84C" opacity=".75"/>
+        <rect x="16" y="11" width="33" height="6" rx="1" fill="#C9A84C" opacity=".55"/>
+        <rect x="7" y="17" width="51" height="74" rx="6" fill="#1C1C1C" stroke="#C9A84C" stroke-width="1" stroke-opacity=".65"/>
+        <rect x="12" y="27" width="6" height="55" rx="3" fill="#C9A84C" opacity=".12"/>
+      </svg>
+      <div class="pres-ml">50<span>ml</span></div>
+      <div class="pres-name">Favorito</div>
+      <p class="pres-desc">El preferido de nuestros clientes. Mejor precio por ml y duración excepcional.</p>
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--dorado);font-weight:600">$32.000</p>
+    </div>
+    <div class="pres-card reveal">
+      <svg class="frasco-svg" width="65" height="95" viewBox="0 0 65 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="21" y="2" width="23" height="10" rx="2" fill="#C9A84C" opacity=".85"/>
+        <rect x="13" y="11" width="39" height="7" rx="1" fill="#C9A84C" opacity=".65"/>
+        <rect x="4" y="18" width="57" height="74" rx="7" fill="#1C1C1C" stroke="#C9A84C" stroke-width="1.2" stroke-opacity=".7"/>
+        <rect x="9" y="29" width="8" height="55" rx="4" fill="#C9A84C" opacity=".15"/>
+      </svg>
+      <div class="pres-ml">100<span>ml</span></div>
+      <div class="pres-name">Colección</div>
+      <p class="pres-desc">Para quien ya tiene su fragancia favorita. El mejor precio por mililitro del catálogo.</p>
+      <p style="margin-top:1rem;font-size:.9rem;color:var(--dorado);font-weight:600">Consultar</p>
+    </div>
+  </div>
+
+  <!-- Recarga -->
+  <div style="max-width:620px;margin:3rem auto 0;background:var(--negro);border:1px solid rgba(201,168,76,.2);padding:2rem 2.5rem;display:flex;gap:2rem;align-items:center;flex-wrap:wrap" class="reveal">
+    <div>
+      <p class="section-label" style="margin-bottom:.5rem">Servicio especial</p>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--blanco);margin-bottom:.5rem">Recarga / <em style="color:var(--dorado)">Refill</em></h3>
+      <p style="font-size:.82rem;color:rgba(240,230,204,.55);line-height:1.65;font-weight:300">¿Ya tienes tu frasco 7AM? Tráelo y lo recargamos a precio especial: 10ml $5.000 · 30ml $15.000 · 50ml $27.000</p>
+    </div>
+    <a href="https://wa.me/573136245018?text=Hola%2C%20quiero%20info%20sobre%20el%20servicio%20de%20recarga" target="_blank" class="btn-primary" style="white-space:nowrap;flex-shrink:0">Consultar precio</a>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div>
+    <p class="section-label reveal">Cómo pedimos</p>
+    <h2 class="reveal">Sencillo como<br/><em>debe ser</em></h2>
+    <div class="proceso-steps">
+      <div class="proceso-step reveal">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h4>Elige tu fragancia</h4>
+          <p>Mira el catálogo, dinos qué perfume original te inspira o cuéntanos qué tipo de aroma te gusta.</p>
+        </div>
+      </div>
+      <div class="proceso-step reveal">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h4>Escoge la presentación</h4>
+          <p>10ml, 30ml o 50ml. También disponible recarga si ya tienes tu frasco 7AM.</p>
+        </div>
+      </div>
+      <div class="proceso-step reveal">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h4>Paga y recibe</h4>
+          <p>Aceptamos Nequi, Bancolombia y efectivo. Coordina el envío por WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proceso-quote reveal">
+    <blockquote>"Una fragancia no es solo un aroma — es la primera impresión que dejas sin decir una palabra."</blockquote>
+    <cite>— 7AM Perfumes · Caldas, Antioquia</cite>
+    <div style="margin-top:2.5rem">
+      <div class="proceso-dot"><div class="dot"></div><p>Entrega en Caldas y municipios cercanos</p></div>
+      <div class="proceso-dot"><div class="dot"></div><p>Envíos a todo Colombia por transportadora</p></div>
+      <div class="proceso-dot"><div class="dot"></div><p>Atención personalizada por WhatsApp</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+  <p class="section-label reveal">Lo que dicen</p>
+  <h2 class="reveal">Clientes que <em>ya huelen increíble</em></h2>
+  <p class="section-desc test-sub reveal">Personas reales, resultados reales.</p>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"El Bleu de Chanel que pedí es una locura. En el trabajo me preguntaron qué perfume era y no podían creer el precio."</p>
+      <span class="test-author">— Andrés M. · Caldas</span>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Compré el La Vie est Belle para mi mamá y quedó feliz. Dura todo el día, que es lo que más me importa."</p>
+      <span class="test-author">— Valentina R. · Itagüí</span>
+    </div>
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Llevo meses pidiendo el 50ml. El servicio es rápido, el empaque bonito y la fragancia idéntica al original."</p>
+      <span class="test-author">— Camilo S. · Medellín</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contacto">
+  <p class="section-label reveal">¿Listo?</p>
+  <h2 class="reveal">Tu fragancia favorita,<br/><em>a un mensaje de distancia</em></h2>
+  <p class="cta-desc reveal">Escríbenos por WhatsApp, cuéntanos qué perfume te gusta y te asesoramos sin costo.</p>
+  <div class="cta-actions reveal">
+    <a href="https://wa.me/573136245018?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20los%20perfumes%207AM" target="_blank" class="btn-wa">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escríbenos en WhatsApp
+    </a>
+    <a href="#catalogo" class="btn-ghost">Ver catálogo completo</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo">7AM <span>Perfumes</span></a>
+      <p>Fragancias inspiradas de alta calidad, elaboradas con las mejores materias primas. Con orgullo desde Caldas, Antioquia, Colombia.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="#porque">Por qué 7AM</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#presentaciones">Presentaciones</a></li>
+        <li><a href="#proceso">Cómo pedir</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://wa.me/573136245018" target="_blank">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">📍 Caldas, Antioquia</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 <span>7AM Perfumes</span> · Caldas, Antioquia, Colombia</p>
+    <p>Fragancias inspiradas · No afiliadas a las casas originales</p>
+  </div>
+</footer>
+
+<script>
+const WA = '573136245018';
+const CATALOGO = [{"nombre": "CLOUD ARIANA GRANDE", "codigo": 954, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.50384.avif", "genero": "Femenino"}, {"nombre": "LIGHT BLUE DOLCE & GABBANA", "codigo": 757, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.485.avif", "genero": "Femenino"}, {"nombre": "GOOD GIRL CAROLINA HERRERA", "codigo": 355, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.39681.avif", "genero": "Femenino"}, {"nombre": "212 VIP ROSE CAROLINA HERRERA", "codigo": 3603, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.22857.avif", "genero": "Femenino"}, {"nombre": "PARIS HILTON", "codigo": 1615, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.1434.avif", "genero": "Femenino"}, {"nombre": "THANK U NEXT ARIANA GRANDE", "codigo": 1094, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.56741.avif", "genero": "Femenino"}, {"nombre": "YARA CANDY LATTAFA", "codigo": 3322, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.95752.avif", "genero": "Femenino"}, {"nombre": "YARA LATTAFA PERFUMES", "codigo": 2794, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.76880.avif", "genero": "Femenino"}, {"nombre": "THANK U NEXT 2.0 ARIANA GRANDE", "codigo": 2732, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.68367.avif", "genero": "Femenino"}, {"nombre": "MOD VANILLA ARIANA GRANDE", "codigo": 2734, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.77799.avif", "genero": "Femenino"}, {"nombre": "SWEET LIKE CANDY ARIANA GRANDE", "codigo": 467, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.39970.avif", "genero": "Femenino"}, {"nombre": "CLOUD PINK ARIANA GRANDE", "codigo": 3116, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.83995.avif", "genero": "Femenino"}, {"nombre": "GOOD GIRL BLUSH ELIXIR CAROLINA HERRERA", "codigo": 3413, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.88937.avif", "genero": "Femenino"}, {"nombre": "IL ROSO ILMIN", "codigo": 2249, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.68115.avif", "genero": "Femenino"}, {"nombre": "COCO MADEMOISELLE CHANEL", "codigo": 1396, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.611.avif", "genero": "Femenino"}, {"nombre": "ECLAIRE LATTAFA PERFUMES", "codigo": 3475, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.93628.avif", "genero": "Femenino"}, {"nombre": "LIBRE YVES SAINT LAURENT", "codigo": 3119, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.95623.avif", "genero": "Femenino"}, {"nombre": "VANILLA CANDY ROCK SUGAR", "codigo": 3431, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.92258.avif", "genero": "Femenino"}, {"nombre": "BURBERRY BURBERRY", "codigo": 2503, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.818.avif", "genero": "Femenino"}, {"nombre": "ODYSSEY CANDEE ARMAF", "codigo": 3527, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.96990.avif", "genero": "Femenino"}, {"nombre": "MAYAR NATURAL INTENSE LATTAFA PERFUMES", "codigo": 3222, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.89759.avif", "genero": "Femenino"}, {"nombre": "MAYAR LATTAFA PERFUMES", "codigo": 3163, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.84309.avif", "genero": "Femenino"}, {"nombre": "FAKHAR ROSE LATTAFA PERFUMES", "codigo": 3220, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.70466.avif", "genero": "Femenino"}, {"nombre": "PRADA PARADOXE INTENSE", "codigo": 3117, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.83988.avif", "genero": "Femenino"}, {"nombre": "YUM YUM ARMAF", "codigo": 3524, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.98717.avif", "genero": "Femenino"}, {"nombre": "ISLAND BLISS ARMAF", "codigo": 3553, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.98718.avif", "genero": "Femenino"}, {"nombre": "Y ELIXIR YVES SAINT LAURENT", "codigo": 3326, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.90024.avif", "genero": "Masculino"}, {"nombre": "LE MALE ELIXIR JEAN PAUL GAULTIER", "codigo": 3151, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.81642.avif", "genero": "Masculino"}, {"nombre": "L.12.12 BLANC LACOSTE", "codigo": 2956, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.24896.avif", "genero": "Masculino"}, {"nombre": "212 VIP BLACK CAROLINA HERRERA", "codigo": 613, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.46093.avif", "genero": "Masculino"}, {"nombre": "EROS VERSACE", "codigo": 3503, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.16657.avif", "genero": "Masculino"}, {"nombre": "STRONGER WITH YOU GIORGIO ARMANI", "codigo": 642, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.45258.avif", "genero": "Masculino"}, {"nombre": "ACQUA DE GIO GIORGIO ARMANI", "codigo": 724, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.71606.avif", "genero": "Masculino"}, {"nombre": "CLUB DE NUIT INTENSE MAN ARMAF", "codigo": 2706, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.72842.avif", "genero": "Masculino"}, {"nombre": "LACOSTE RED", "codigo": 1125, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.3189.avif", "genero": "Masculino"}, {"nombre": "9PM AFNAN", "codigo": 2997, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.65414.avif", "genero": "Masculino"}, {"nombre": "UOMO BORN IN ROMA VALENTINO", "codigo": 2832, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.78740.avif", "genero": "Masculino"}, {"nombre": "ODYSSEY MANDARIN SKY ARMAF", "codigo": 3189, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.83132.avif", "genero": "Masculino"}, {"nombre": "LE BEAU LE PARFUM JEAN PAUL GAULTIER", "codigo": 3043, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.72158.avif", "genero": "Masculino"}, {"nombre": "STAR WALKER MONTBLANCC", "codigo": 1547, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.4023.avif", "genero": "Masculino"}, {"nombre": "EROS FLAME VERSACE", "codigo": 1063, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.52180.avif", "genero": "Masculino"}, {"nombre": "KING BHARARA", "codigo": 2507, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.74184.avif", "genero": "Masculino"}, {"nombre": "MY VOYAGE NAUTICA", "codigo": 2448, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.913.avif", "genero": "Masculino"}, {"nombre": "INVICTUS PACO RABANNE", "codigo": 3467, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.18471.avif", "genero": "Masculino"}, {"nombre": "AQVA MARINE BVLGARI", "codigo": 2648, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.1742.avif", "genero": "Masculino"}, {"nombre": "SCANDAL POUR HOMME ABSOLU JEAN PAUL GAULTIER", "codigo": 3318, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.91053.avif", "genero": "Masculino"}, {"nombre": "VERSACE POUR HOMME DYLAN BLUE VERSACE", "codigo": 945, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.40031.avif", "genero": "Masculino"}, {"nombre": "AVENTUS CREED", "codigo": 440, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.9828.avif", "genero": "Masculino"}, {"nombre": "FAHKAR LATTAFA PERFUMES", "codigo": 3049, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.70465.avif", "genero": "Masculino"}, {"nombre": "BOTTLED ABSOLU EDP INTENSE HUGO BOSS", "codigo": 3519, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.96246.avif", "genero": "Masculino"}, {"nombre": "BAD BOY CAROLINA HERRERA", "codigo": 1040, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.55449.avif", "genero": "Masculino"}, {"nombre": "L'IMSITE LOUIS VUITTON", "codigo": 2096, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.49751.avif", "genero": "Masculino"}, {"nombre": "SAUVAGE ELIXIR POUR CHRISTIAN DIOR", "codigo": 2069, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.68415.avif", "genero": "Masculino"}, {"nombre": "LUNA ROSSA CARBON PRADA", "codigo": 2508, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.43402.avif", "genero": "Masculino"}, {"nombre": "ALTHAIR PARFUMS DE MARLY", "codigo": 3558, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.84109.avif", "genero": "Masculino"}, {"nombre": "AMETHYST LATTAFA", "codigo": 2713, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.68214.avif", "genero": "Unisex"}, {"nombre": "ARABIAN´S TONKA MONTALE", "codigo": 2531, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.57384.avif", "genero": "Unisex"}, {"nombre": "AMBER OUD GOLD EDITION AL HARAMAIN", "codigo": 1841, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.51816.avif", "genero": "Masculino"}, {"nombre": "SANTAL 33 LE LABO", "codigo": 1700, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.12201.avif", "genero": "Masculino"}, {"nombre": "LAVANDE 31 LE LABO", "codigo": 3424, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.84249.avif", "genero": "Masculino"}, {"nombre": "KHAMRAH LATTAFA PERFUMES", "codigo": 2729, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.75805.avif", "genero": "Unisex"}, {"nombre": "STARRY NIGHT MONTALE", "codigo": 1684, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31771.avif", "genero": "Femenino"}, {"nombre": "OMBRE NOMADE LOUIS VUITTON", "codigo": 2099, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.49755.avif", "genero": "Masculino"}, {"nombre": "BLEECKER STREET BOND N°9", "codigo": 3227, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.1301.avif", "genero": "Unisex"}, {"nombre": "ERBA PURA XERJOFF", "codigo": 2286, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.55157.avif", "genero": "Masculino"}, {"nombre": "AMBER OUD ROUGE AL HARAMAIN", "codigo": 2097, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.66100.avif", "genero": "Masculino"}, {"nombre": "ODYSSEY DUBAI CHOCOLAT ARMAF", "codigo": 3518, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.102117.avif", "genero": "Unisex"}, {"nombre": "KHAMRAH QAHWA LATTAFA PERFUMES", "codigo": 3526, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.88175.avif", "genero": "Unisex"}, {"nombre": "NEBRAS LATTAFA PERFUMES", "codigo": 2852, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.78560.avif", "genero": "Unisex"}, {"nombre": "HONOR & GLORY LATTAFA PERFUMES", "codigo": 2885, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.84302.avif", "genero": "Unisex"}, {"nombre": "SHAHEEN GOLD LATTAFA PERFUMES", "codigo": 3162, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.82814.avif", "genero": "Unisex"}, {"nombre": "PACIFIC CHILL LOUIS VUITTON", "codigo": 3200, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.81423.avif", "genero": "Unisex"}, {"nombre": "AMBER ROUGE ORIENTICA", "codigo": 2797, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.69364.avif", "genero": "Unisex"}, {"nombre": "OMBRE LEATHER TOM FORD", "codigo": 2167, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.50239.avif", "genero": "Masculino"}, {"nombre": "BADE'E AL OUD SUBLIME", "codigo": 2833, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.83309.avif", "genero": "Unisex"}, {"nombre": "AMBER OUD AQUA DUBAI AL HARAMAIN", "codigo": 3419, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.96482.avif", "genero": "Unisex"}, {"nombre": "9 AM DIVE AFNAN", "codigo": 3604, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.78611.avif", "genero": "Unisex"}, {"nombre": "SUN-GRIA LORENZO PAZZAGLIA", "codigo": 3608, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.90748.avif", "genero": "Unisex"}, {"nombre": "9PM REBEL AFNAN", "codigo": 3615, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.99238.avif", "genero": "Unisex"}, {"nombre": "CLUB DE NUIT SILLAGE ARMAF", "codigo": 3616, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.64105.avif", "genero": "Unisex"}, {"nombre": "SILVER MOUNTAIN CREED", "codigo": 3619, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.472.avif", "genero": "Unisex"}, {"nombre": "La Vie Est Belle Lancôme", "codigo": 3224, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.14982.avif", "genero": "Femenino"}, {"nombre": "La Bomba Carolina Herrera", "codigo": 3657, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.105931.avif", "genero": "Femenino"}, {"nombre": "Nitro Red Dumont", "codigo": 3664, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.73023.avif", "genero": "Masculino"}, {"nombre": "SAUVAGE CHRISTIAN DIOR", "codigo": 3859, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/375x500.31861.avif", "genero": "Masculino"}, {"nombre": "WHIPPED PLEASURE", "codigo": 3927, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.114397.avif", "genero": "Femenino"}, {"nombre": "COOKIE CRAVE", "codigo": 3926, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.114399.avif", "genero": "Femenino"}, {"nombre": "AFFECTION LATTAFA", "codigo": 3919, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.92183.avif", "genero": "Femenino"}, {"nombre": "BOSS BOTTLE", "codigo": 3721, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.383.avif", "genero": "Masculino"}, {"nombre": "L\"EMPERATRICE", "codigo": 2658, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.63485.avif", "genero": "Femenino"}, {"nombre": "BLEU DE CHANEL", "codigo": 2838, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.25967.avif", "genero": "Masculino"}, {"nombre": "ACQUA DI GIO PROFONDO", "codigo": 1893, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.59532.avif", "genero": "Masculino"}, {"nombre": "LAYTON", "codigo": 2924, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.39314.avif", "genero": "Unisex"}, {"nombre": "SPICEBOMB EXTREME", "codigo": 3813, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.30499.avif", "genero": "Masculino"}, {"nombre": "DELINA EXCLUSIF", "codigo": 3061, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.50370.avif", "genero": "Femenino"}, {"nombre": "SWEET TOOTH CARMEL DREAM", "codigo": 3225, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.84095.avif", "genero": "Femenino"}, {"nombre": "BOSS BOTTLED NIGHT", "codigo": 2836, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.8825.avif", "genero": "Masculino"}, {"nombre": "ODYSSEY HOMME", "codigo": 3953, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.64464.avif", "genero": "Masculino"}, {"nombre": "9PM ELIXIR", "codigo": 3951, "p10": 7000, "p30": 20000, "p50": 32000, "link": "https://fimgs.net/mdimg/perfume-thumbs/dark-375x500.111894.avif", "genero": "Unisex"}];
+
+// Formatear precio COP
+function formatCOP(n) {
+  return '$' + n.toLocaleString('es-CO');
+}
+
+// Generar mensaje WhatsApp para una fragancia
+function waMsg(p) {
+  const txt = encodeURIComponent(
+    'Hola 7AM Perfumes! 👋\n\nMe interesa esta fragancia:\n' +
+    '🌟 ' + p.nombre + '\n' +
+    '📦 Código: ' + p.codigo + '\n\n' +
+    '¿Me pueden dar más información sobre disponibilidad y presentaciones?'
+  );
+  return 'https://wa.me/' + WA + '?text=' + txt;
+}
+
+// Render tarjetas
+function renderCards(lista) {
+  const grid = document.getElementById('fragGrid');
+  grid.innerHTML = '';
+  document.getElementById('countNum').textContent = lista.length;
+
+  if (lista.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;color:rgba(240,230,204,.3);font-size:.9rem">No se encontraron fragancias con ese criterio.</div>';
+    return;
+  }
+
+  lista.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'fragancia-card';
+
+    const generoLabel = p.genero === 'Femenino' ? '♀ Femenino' :
+                        p.genero === 'Masculino' ? '♂ Masculino' : '⊕ Unisex';
+
+    card.innerHTML = `
+      <div class="fcard-img-wrap">
+        <img class="fcard-img" src="${p.link}" alt="${p.nombre}" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="fcard-img-placeholder" style="display:none">🌸</div>
+        <div class="fcard-overlay">
+          <a class="fcard-wa" href="${waMsg(p)}" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Pedir por WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="fcard-body">
+        <span class="fcard-genero">${generoLabel}</span>
+        <div class="fcard-name">${p.nombre}</div>
+        <div class="fcard-code">Cód. ${p.codigo}</div>
+        <div class="fcard-prices">
+          ${p.p10 ? `<div class="fcard-price"><span class="fcard-price-ml">10ml</span><span class="fcard-price-val">${formatCOP(p.p10)}</span></div><div class="fcard-price-sep"></div>` : ''}
+          ${p.p30 ? `<div class="fcard-price"><span class="fcard-price-ml">30ml</span><span class="fcard-price-val">${formatCOP(p.p30)}</span></div><div class="fcard-price-sep"></div>` : ''}
+          ${p.p50 ? `<div class="fcard-price"><span class="fcard-price-ml">50ml</span><span class="fcard-price-val">${formatCOP(p.p50)}</span></div>` : ''}
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// Estado de filtros
+let filtroActivo = 'Todos';
+let busqueda = '';
+
+function aplicarFiltros() {
+  let lista = CATALOGO;
+  if (filtroActivo !== 'Todos') {
+    lista = lista.filter(p => p.genero === filtroActivo);
+  }
+  if (busqueda.trim()) {
+    const q = busqueda.toLowerCase();
+    lista = lista.filter(p => p.nombre.toLowerCase().includes(q));
+  }
+  renderCards(lista);
+}
+
+// Filtros de género
+document.querySelectorAll('.filtro-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filtroActivo = btn.dataset.filtro;
+    aplicarFiltros();
+  });
+});
+
+// Buscador
+document.getElementById('searchInput').addEventListener('input', e => {
+  busqueda = e.target.value;
+  aplicarFiltros();
+});
+
+// Render inicial
+renderCards(CATALOGO);
+
+// Navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Hamburger
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.mobile-link, .mobile-menu a').forEach(l => {
+  l.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  });
+});
+
+// Reveal on scroll
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
