@@ -850,16 +850,83 @@ const cMapaIntensidad = {
   intenso: ['ORIENTAL','MADEROSA','GOURMAND','FRUTAL'],
 };
 
+// ------------------------------------------------------
+// Tu tabla de Supabase NO tiene columna 'familia', así que
+// la deducimos automáticamente a partir del nombre del
+// producto. No requiere tocar la base de datos: cuando
+// agregues un producto nuevo, si su nombre coincide con algo
+// de este diccionario (o con una palabra clave típica), se
+// clasifica solo. Si no coincide con nada, cae en un
+// respaldo genérico según el género para que nunca quede
+// sin resultados.
+// ------------------------------------------------------
+const cDiccionarioFamilia = {
+  // ORIENTAL / especiado-ámbar
+  'SAUVAGE': 'ORIENTAL', 'BLACK OPIUM': 'ORIENTAL', 'GOOD GIRL': 'ORIENTAL',
+  'BHARARA': 'ORIENTAL', 'LATTAFA': 'ORIENTAL', 'KHAMRAH': 'ORIENTAL',
+  'ELIXIR': 'ORIENTAL', 'OUD': 'ORIENTAL', 'AMBER': 'ORIENTAL', 'QAHWA': 'ORIENTAL',
+  'SHAHEEN': 'ORIENTAL', 'BOMBSHELL': 'ORIENTAL', 'ARMANI CODE': 'ORIENTAL',
+  // MADEROSA
+  'SANDALWOOD': 'MADEROSA', 'CEDAR': 'MADEROSA', 'DYLAN BLUE': 'MADEROSA',
+  'LAYTON': 'MADEROSA', 'OMBRE LEATHER': 'MADEROSA', 'OMBRE NOMADE': 'MADEROSA',
+  'TERRE': 'MADEROSA', 'VETIVER': 'MADEROSA', 'LEATHER': 'MADEROSA',
+  // FLORAL
+  'LIBRE': 'FLORAL', 'LA VIE EST BELLE': 'FLORAL', 'CHANCE': 'FLORAL',
+  'DAISY': 'FLORAL', 'GARDENIA': 'FLORAL', 'JASMINE': 'FLORAL', 'ROSE': 'FLORAL',
+  'MOD VANILLA': 'FLORAL', 'PLUSH VANILLA': 'FLORAL', 'MAYAR': 'FLORAL',
+  // CITRICA
+  'BERGAMOT': 'CITRICA', 'LIMON': 'CITRICA', 'LEMON': 'CITRICA', 'ACQUA DI GIO': 'CITRICA',
+  // ACUATICA
+  'AQVA': 'ACUATICA', 'AQUA': 'ACUATICA', 'MARINE': 'ACUATICA', 'NAUTICA': 'ACUATICA',
+  'ON THE BEACH': 'ACUATICA', 'STARRY NIGHT': 'ACUATICA',
+  // AROMATICA / fougère fresco
+  'LE MALE': 'AROMATICA', 'LE BEAU': 'AROMATICA', 'SCANDAL POUR HOMME': 'AROMATICA',
+  'LAVANDE': 'AROMATICA', 'SPICEBOMB': 'AROMATICA', 'KING': 'AROMATICA',
+  // FRUTAL
+  'YARA CANDY': 'FRUTAL', 'WHIPPED': 'FRUTAL', 'NEBRAS': 'FRUTAL',
+  // GOURMAND
+  'VANILLA CANDY': 'GOURMAND', 'ROCK SUGAR': 'GOURMAND', 'CANDEE': 'GOURMAND',
+  'IMSITE': 'GOURMAND',
+};
+const cPalabrasClave = {
+  ORIENTAL:  ['OUD','AMBAR','AMBER','ESPECIA','INCIENSO','ELIXIR'],
+  MADEROSA:  ['MADERA','SANDALO','CEDRO','VETIVER','LEATHER','CUERO'],
+  FLORAL:    ['FLOR','ROSA','ROSE','JAZMIN','JASMINE','GARDENIA','PEONIA'],
+  CITRICA:   ['CITRICO','LIMON','LEMON','BERGAMOTA','NARANJA','MANDARINA'],
+  ACUATICA:  ['MARINO','MARINE','AQUA','AQVA','AGUA','OCEAN','BEACH'],
+  AROMATICA: ['LAVANDA','FOUGERE','HIERBA','ROMERO','FRESH','FRESCO'],
+  FRUTAL:    ['FRUTA','FRUTAL','CANDY','MANZANA','DURAZNO','PEACH','BERRY'],
+  GOURMAND:  ['VAINILLA','VANILLA','CARAMELO','CHOCOLATE','DULCE','SUGAR','GOURMAND'],
+};
+const cRespaldoPorGenero = { Masculino: 'MADEROSA', Femenino: 'FLORAL', Unisex: 'AROMATICA' };
+const cCacheFamilia = new Map();
+function inferirFamilia(p) {
+  if (cCacheFamilia.has(p.codigo)) return cCacheFamilia.get(p.codigo);
+  const nombreNorm = normalizar(p.nombre);
+  let resultado = null;
+  for (const clave in cDiccionarioFamilia) {
+    if (nombreNorm.includes(normalizar(clave))) { resultado = cDiccionarioFamilia[clave]; break; }
+  }
+  if (!resultado) {
+    for (const fam in cPalabrasClave) {
+      if (cPalabrasClave[fam].some(kw => nombreNorm.includes(normalizar(kw)))) { resultado = fam; break; }
+    }
+  }
+  if (!resultado) resultado = cRespaldoPorGenero[p.genero] || 'AROMATICA';
+  cCacheFamilia.set(p.codigo, resultado);
+  return resultado;
+}
+
 function cCalcScore(p) {
-  // El campo familia viene de Supabase — puede llamarse 'familia' o similar
-  const fam = (p.familia || '').toUpperCase();
+  // La familia no viene de Supabase (esa columna no existe en tu tabla);
+  // la deducimos del nombre del producto con inferirFamilia().
+  const fam = inferirFamilia(p);
   let score = 0;
-  const kwsFam = cMapaFamilia[cSelecciones.familia] || [];
-  if (kwsFam.some(kw => fam.includes(kw))) score += 40;
+  if (fam === cSelecciones.familia) score += 40;
   const ocFamilias = cMapaOcasion[cSelecciones.ocasion] || [];
-  if (ocFamilias.some(f => { const kws = cMapaFamilia[f] || [f]; return kws.some(kw => fam.includes(kw)); })) score += 30;
+  if (ocFamilias.includes(fam)) score += 30;
   const inFamilias = cMapaIntensidad[cSelecciones.intensidad] || [];
-  if (inFamilias.some(f => { const kws = cMapaFamilia[f] || [f]; return kws.some(kw => fam.includes(kw)); })) score += 30;
+  if (inFamilias.includes(fam)) score += 30;
   return score;
 }
 
@@ -932,7 +999,7 @@ function crenderResultados(lista) {
       <div class="ct-nombre">${p.nombre}</div>
       <div class="ct-casa">Inspirada en ${p.nombre}</div>
       <div class="ct-tags">
-        <span class="ct-tag familia">${p.familia || ''}</span>
+        <span class="ct-tag familia">${inferirFamilia(p)}</span>
         <span class="ct-tag">${p.genero || ''}</span>
       </div>
       <div class="ct-score-bar"><div class="ct-score-fill" style="width:${pct}%"></div></div>
