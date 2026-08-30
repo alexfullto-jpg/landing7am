@@ -97,6 +97,16 @@
     .filtro-btn{background:transparent;border:1px solid rgba(201,168,76,.2);color:rgba(240,230,204,.5);font-family:'Inter',sans-serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.5rem 1.2rem;cursor:pointer;transition:all .25s}
     .filtro-btn:hover,.filtro-btn.active{border-color:var(--dorado);color:var(--dorado);background:rgba(201,168,76,.06)}
 
+    /* Promo Amor y Amistad */
+    .filtro-btn.promo-btn{border-color:#E63950;color:#E8899B}
+    .filtro-btn.promo-btn:hover,.filtro-btn.promo-btn.active{background:#E63950;color:#fff;border-color:#E63950}
+    .promo-banner{background:linear-gradient(135deg,#E63950,#B71C3C);color:#fff;padding:1.6rem 2rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+    .promo-banner h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700}
+    .promo-banner p{font-size:.82rem;opacity:.9;margin-top:.3rem}
+    .promo-banner .promo-fecha{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;white-space:nowrap}
+    .fcard-badge-promo{position:absolute;top:.8rem;left:.8rem;background:#E63950;color:#fff;font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .65rem;display:flex;align-items:center;gap:.3rem;z-index:2}
+    .fcard-price-original{font-size:.65rem;color:rgba(240,230,204,.35);text-decoration:line-through;display:block;margin-bottom:.1rem}
+
     /* Buscador */
     .search-wrap{position:relative;margin-bottom:2rem;max-width:400px}
     .search-wrap input{width:100%;background:var(--carbon);border:1px solid rgba(201,168,76,.15);color:var(--crema);font-family:'Inter',sans-serif;font-size:.85rem;padding:.75rem 1rem .75rem 2.8rem;outline:none;transition:border-color .25s}
@@ -213,6 +223,7 @@
       .porque-grid{grid-template-columns:1fr}
       .hero-stats{position:static;margin-top:3rem}
       .footer-grid{grid-template-columns:1fr;gap:2.5rem}
+      .promo-banner{flex-direction:column;align-items:flex-start}
     }
     @media(max-width:420px){
       .presentaciones-grid{grid-template-columns:1fr 1fr}
@@ -331,6 +342,14 @@
     <button class="filtro-btn" data-filtro="Femenino">Femenino</button>
     <button class="filtro-btn" data-filtro="Masculino">Masculino</button>
     <button class="filtro-btn" data-filtro="Unisex">Unisex</button>
+    <button class="filtro-btn promo-btn" data-filtro="Promo">💝 Promo Amor y Amistad</button>
+  </div>
+  <div class="promo-banner reveal" id="promoBanner" style="display:none">
+    <div>
+      <h3>💝 Promo Amor y Amistad</h3>
+      <p>Precio especial en fragancias seleccionadas de nuestro catálogo.</p>
+    </div>
+    <div class="promo-fecha">Válida hasta: <span id="promoFecha"></span></div>
   </div>
   <p class="cat-count" id="catCount" style="display:none">Mostrando <span id="countNum">0</span> fragancias</p>
   <div class="fragancias-grid" id="fragGrid"></div>
@@ -519,6 +538,40 @@ const WA = '573136245018';
 const SUPABASE_URL = 'https://glscwirltcfoyybomfxr.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdsc2N3aXJsdGNmb3l5Ym9tZnhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4MTIxNzAsImV4cCI6MjEwMjM4ODE3MH0.oc1I7zLPvbr8X-k_KbKJN6eHp4K6bsyRwbWUVt7rz88';
 
+// ====== PROMO AMOR Y AMISTAD ======
+// 👉 EDITA la fecha límite de la promo aquí:
+const PROMO_FECHA_LIMITE = 'próximamente'; // ejemplo: '20 de septiembre'
+
+// 👉 EDITA aquí el precio fijo especial para cada presentación:
+const PROMO_PRECIOS = { p10: 5000, p30: 15000, p50: 25000 };
+
+// Lista de fragancias en promo (inventario de 30+ días sin movimiento)
+const PROMO_NOMBRES_RAW = [
+  "212 VIP ROSE CAROLINA HERRERA","9 AM DIVE AFNAN","9PM AFNAN","ACQUA DI GIO PROFONDO",
+  "AFFECTION LATTAFA","AMBER OUD AQUA DUBAI AL HARAMAIN","AMBER OUD GOLD EDITION AL HARAMAIN",
+  "AMBER OUD ROUGE AL HARAMAIN","AMETHYST LATTAFA","AVENTUS CREED","BACCARAT ROUGE 540",
+  "BADE'E AL OUD SUBLIME","BLEECKER STREET BOND N°9","BOSS BOTTLE","BOSS BOTTLED NIGHT",
+  "BOTTLED ABSOLU EDP INTENSE HUGO BOSS","COCO MADEMOISELLE CHANEL","ERBA PURA XERJOFF",
+  "EROS FLAME VERSACE","FAHKAR LATTAFA PERFUMES","GOOD GIRL BLUSH ELIXIR CAROLINA HERRERA",
+  "HONOR & GLORY LATTAFA PERFUMES","Hawas for Him Rasasi","IL ROSO ILMIN","ISLAND BLISS ARMAF",
+  "KHAMRAH QAHWA LATTAFA PERFUMES","KING BHARARA","L'IMSITE LOUIS VUITTON","LACOSTE RED",
+  "LAVANDE 31 LE LABO","LAYTON","LE BEAU LE PARFUM JEAN PAUL GAULTIER",
+  "LE MALE ELIXIR JEAN PAUL GAULTIER","LIBRE YVES SAINT LAURENT","LUNA ROSSA CARBON PRADA",
+  "La Vie Est Belle Lancôme","MAYAR LATTAFA PERFUMES","MOD VANILLA ARIANA GRANDE",
+  "MY VOYAGE NAUTICA","NEBRAS LATTAFA PERFUMES","ODYSSEY CANDEE ARMAF","OMBRE LEATHER TOM FORD",
+  "OMBRE NOMADE LOUIS VUITTON","On The Beach Louis Vuitton","Plush Vanilla Ariana Grande",
+  "SAUVAGE ELIXIR POUR CHRISTIAN DIOR","SCANDAL POUR HOMME ABSOLU JEAN PAUL GAULTIER",
+  "SHAHEEN GOLD LATTAFA PERFUMES","SPICEBOMB EXTREME","STARRY NIGHT MONTALE",
+  "VANILLA CANDY ROCK SUGAR","VERSACE POUR HOMME DYLAN BLUE VERSACE","WHIPPED PLEASURE",
+  "Y ELIXIR YVES SAINT LAURENT","YARA CANDY LATTAFA"
+];
+
+function normalizar(str) {
+  return (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase().trim();
+}
+const PROMO_SET = new Set(PROMO_NOMBRES_RAW.map(normalizar));
+function esPromo(p) { return PROMO_SET.has(normalizar(p.nombre)); }
+
 // Formatear precio COP
 function formatCOP(n) {
   if (!n || n === 0) return null;
@@ -527,10 +580,11 @@ function formatCOP(n) {
 
 // Generar mensaje WhatsApp
 function waMsg(p) {
+  const promoTxt = esPromo(p) ? '\n💝 Interesado en el precio de la Promo Amor y Amistad' : '';
   const txt = encodeURIComponent(
     'Hola 7AM Perfumes! 👋\n\nMe interesa esta fragancia:\n' +
     '🌟 ' + p.nombre + '\n' +
-    '📦 Código: ' + p.codigo + '\n\n' +
+    '📦 Código: ' + p.codigo + promoTxt + '\n\n' +
     '¿Me pueden dar más información sobre disponibilidad y presentaciones?'
   );
   return 'https://wa.me/' + WA + '?text=' + txt;
@@ -553,12 +607,29 @@ function renderCards(lista) {
     const generoLabel = p.genero === 'Femenino' ? '♀ Femenino' :
                         p.genero === 'Masculino' ? '♂ Masculino' : '⊕ Unisex';
 
-    const p10 = formatCOP(p.p10);
-    const p30 = formatCOP(p.p30);
-    const p50 = formatCOP(p.p50);
+    const promo = esPromo(p);
+    let preciosHTML = '';
+
+    if (promo) {
+      const bloques = [];
+      if (p.p10) bloques.push(`<div class="fcard-price"><span class="fcard-price-ml">10ml</span><span class="fcard-price-original">${formatCOP(p.p10)}</span><span class="fcard-price-val">${formatCOP(PROMO_PRECIOS.p10)}</span></div>`);
+      if (p.p30) bloques.push(`<div class="fcard-price"><span class="fcard-price-ml">30ml</span><span class="fcard-price-original">${formatCOP(p.p30)}</span><span class="fcard-price-val">${formatCOP(PROMO_PRECIOS.p30)}</span></div>`);
+      if (p.p50) bloques.push(`<div class="fcard-price"><span class="fcard-price-ml">50ml</span><span class="fcard-price-original">${formatCOP(p.p50)}</span><span class="fcard-price-val">${formatCOP(PROMO_PRECIOS.p50)}</span></div>`);
+      preciosHTML = bloques.join('<div class="fcard-price-sep"></div>');
+    } else {
+      const p10 = formatCOP(p.p10);
+      const p30 = formatCOP(p.p30);
+      const p50 = formatCOP(p.p50);
+      const bloques = [];
+      if (p10) bloques.push(`<div class="fcard-price"><span class="fcard-price-ml">10ml</span><span class="fcard-price-val">${p10}</span></div>`);
+      if (p30) bloques.push(`<div class="fcard-price"><span class="fcard-price-ml">30ml</span><span class="fcard-price-val">${p30}</span></div>`);
+      if (p50) bloques.push(`<div class="fcard-price"><span class="fcard-price-ml">50ml</span><span class="fcard-price-val">${p50}</span></div>`);
+      preciosHTML = bloques.join('<div class="fcard-price-sep"></div>');
+    }
 
     card.innerHTML = `
       <div class="fcard-img-wrap">
+        ${promo ? '<div class="fcard-badge-promo">💝 Promo</div>' : ''}
         <img class="fcard-img" src="${p.link}" alt="${p.nombre}" loading="lazy"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
         <div class="fcard-img-placeholder" style="display:none">🌸</div>
@@ -573,11 +644,7 @@ function renderCards(lista) {
         <span class="fcard-genero">${generoLabel}</span>
         <div class="fcard-name">${p.nombre}</div>
         <div class="fcard-code">Cód. ${p.codigo}</div>
-        <div class="fcard-prices">
-          ${p10 ? `<div class="fcard-price"><span class="fcard-price-ml">10ml</span><span class="fcard-price-val">${p10}</span></div><div class="fcard-price-sep"></div>` : ''}
-          ${p30 ? `<div class="fcard-price"><span class="fcard-price-ml">30ml</span><span class="fcard-price-val">${p30}</span></div><div class="fcard-price-sep"></div>` : ''}
-          ${p50 ? `<div class="fcard-price"><span class="fcard-price-ml">50ml</span><span class="fcard-price-val">${p50}</span></div>` : ''}
-        </div>
+        <div class="fcard-prices">${preciosHTML}</div>
       </div>
     `;
     grid.appendChild(card);
@@ -591,13 +658,19 @@ let CATALOGO = [];
 
 function aplicarFiltros() {
   let lista = CATALOGO;
-  if (filtroActivo !== 'Todos') {
+
+  if (filtroActivo === 'Promo') {
+    lista = lista.filter(esPromo);
+  } else if (filtroActivo !== 'Todos') {
     lista = lista.filter(p => p.genero === filtroActivo);
   }
+
   if (busqueda.trim()) {
-    const q = busqueda.toLowerCase();
-    lista = lista.filter(p => p.nombre.toLowerCase().includes(q));
+    const q = normalizar(busqueda);
+    lista = lista.filter(p => normalizar(p.nombre).includes(q));
   }
+
+  document.getElementById('promoBanner').style.display = filtroActivo === 'Promo' ? 'flex' : 'none';
   renderCards(lista);
 }
 
@@ -630,7 +703,9 @@ async function cargarCatalogo() {
   }
 }
 
-// Filtros de género
+document.getElementById('promoFecha').textContent = PROMO_FECHA_LIMITE;
+
+// Filtros de género / promo
 document.querySelectorAll('.filtro-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
